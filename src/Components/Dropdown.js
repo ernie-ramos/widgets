@@ -4,17 +4,21 @@ const Dropdown = ({ options, selected, onSelectedChange }) => {
   const [open, setOpen] = useState(false);
   const ref = useRef();
 
+  const tStyle = { color: selected.value };
+
   useEffect(() => {
-    document.body.addEventListener(
-      'click',
-      (e) => {
-        if (ref.current && ref.current.contains(e.target)) {
-          return;
-        }
-        setOpen(false);
-      },
-      { capture: true }
-    );
+    const onBodyClick = (e) => {
+      if (ref.current && ref.current.contains(e.target)) {
+        return;
+      }
+      setOpen(false);
+    };
+
+    document.body.addEventListener('click', onBodyClick, { capture: true });
+
+    return () => {
+      document.body.removeEventListener('click', onBodyClick);
+    };
   }, []);
 
   const renderedOptions = options.map((option) => {
@@ -47,6 +51,7 @@ const Dropdown = ({ options, selected, onSelectedChange }) => {
           </div>
         </div>
       </div>
+      <h2 style={tStyle}>Changing Text Color</h2>
     </div>
   );
 };

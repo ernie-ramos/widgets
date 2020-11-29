@@ -35,15 +35,21 @@ const options = [
 
 export default () => {
   const [selected, setSelected] = useState(options[0]);
+  const [showDropdown, setShowdropdown] = useState(true);
   return (
     <div>
       {/* <Accordion items={items} /> */}
       {/* <Search /> */}
-      <Dropdown
-        selected={selected}
-        onSelectedChange={setSelected}
-        options={options}
-      />
+      <button onClick={() => setShowdropdown(!showDropdown)}>
+        Toggle Dropdown
+      </button>
+      {showDropdown ? (
+        <Dropdown
+          selected={selected}
+          onSelectedChange={setSelected}
+          options={options}
+        />
+      ) : null}
     </div>
   );
 };
